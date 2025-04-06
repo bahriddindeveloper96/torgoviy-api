@@ -4,12 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
-class Category extends Model
+class Category extends Model implements TranslatableContract
 {
+    use Translatable;
+
+    public $translatedAttributes = ['name', 'description'];
+    
     protected $fillable = [
-        'name',
-        'description',
         'slug',
         'image',
         'parent_id'
@@ -20,12 +24,15 @@ class Category extends Model
         parent::boot();
 
         static::creating(function ($category) {
-            $category->slug = Str::slug($category->name);
+            // Generate slug from the default locale's name
+            $defaultLocale = config('app.locale');
+            $category->slug = Str::slug($category->translate($defaultLocale)->name);
         });
 
         static::updating(function ($category) {
             if ($category->isDirty('name')) {
-                $category->slug = Str::slug($category->name);
+                $defaultLocale = config('app.locale');
+                $category->slug = Str::slug($category->translate($defaultLocale)->name);
             }
         });
     }

@@ -3,20 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
-class Attribute extends Model
+class Attribute extends Model implements TranslatableContract
 {
+    use Translatable;
+
+    public $translatedAttributes = ['name'];
+    
     protected $fillable = [
-        'name',
-        'type', // text, number, select, boolean
-        'options', // JSON array for select type
+        'type',
         'category_id',
         'is_required',
+        'is_filterable',
+        'validation_rules'
     ];
 
     protected $casts = [
-        'options' => 'array',
         'is_required' => 'boolean',
+        'is_filterable' => 'boolean',
+        'validation_rules' => 'array'
     ];
 
     public function category()

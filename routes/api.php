@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AttributeController; // Added AttributeController
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,10 @@ Route::controller(AuthController::class)->group(function () {
 
 // Category routes
 Route::apiResource('categories', CategoryController::class);
+Route::get('categories/{category}/products', [CategoryController::class, 'products']);
+
+// Attribute routes
+Route::apiResource('attributes', AttributeController::class);
 
 // Product routes
 Route::controller(ProductController::class)->group(function () {
