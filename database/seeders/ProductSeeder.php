@@ -149,9 +149,12 @@ class ProductSeeder extends Seeder
             
             // Attributelarni qo'shish
             foreach ($attributes as $name => $value) {
-                $attribute = Attribute::where('name', $name)
-                    ->where('category_id', $product->category_id)
-                    ->first();
+                // $attribute = Attribute::where('name', $name)
+                //     ->where('category_id', $product->category_id)
+                //     ->first();
+                $attribute = Attribute::whereTranslation('name', $name)
+                      ->where('category_id', $product->category_id)
+                      ->first();
                 
                 if ($attribute) {
                     ProductAttribute::create([

@@ -14,7 +14,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Brand',
                 'type' => 'select',
-                'options' => ['Apple', 'Samsung', 'Xiaomi', 'Huawei', 'LG', 'Sony'],
+                'options' => json_encode(['Apple', 'Samsung', 'Xiaomi', 'Huawei', 'LG', 'Sony']),
                 'category_id' => 1,
                 'is_required' => true,
             ],
@@ -27,7 +27,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Storage',
                 'type' => 'select',
-                'options' => ['32GB', '64GB', '128GB', '256GB', '512GB', '1TB'],
+                'options' => json_encode(['32GB', '64GB', '128GB', '256GB', '512GB', '1TB']),
                 'category_id' => 1,
                 'is_required' => true,
             ],
@@ -48,7 +48,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Size',
                 'type' => 'select',
-                'options' => ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                'options' => json_encode(['XS', 'S', 'M', 'L', 'XL', 'XXL']),
                 'category_id' => 2,
                 'is_required' => true,
             ],
@@ -67,7 +67,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Gender',
                 'type' => 'select',
-                'options' => ['Male', 'Female', 'Unisex'],
+                'options' => json_encode(['Male', 'Female', 'Unisex']),
                 'category_id' => 2,
                 'is_required' => true,
             ],
@@ -76,7 +76,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Brand',
                 'type' => 'select',
-                'options' => ['LG', 'Samsung', 'Artel', 'Shivaki', 'Sony'],
+                'options' => json_encode(['LG', 'Samsung', 'Artel', 'Shivaki', 'Sony']),
                 'category_id' => 3,
                 'is_required' => true,
             ],
@@ -89,7 +89,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Energy Class',
                 'type' => 'select',
-                'options' => ['A+++', 'A++', 'A+', 'A', 'B', 'C'],
+                'options' => json_encode(['A+++', 'A++', 'A+', 'A', 'B', 'C']),
                 'category_id' => 3,
                 'is_required' => false,
             ],
@@ -98,7 +98,7 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Brand',
                 'type' => 'select',
-                'options' => ['Chevrolet', 'Toyota', 'Hyundai', 'Kia', 'Ford'],
+                'options' => json_encode(['Chevrolet', 'Toyota', 'Hyundai', 'Kia', 'Ford']),
                 'category_id' => 4,
                 'is_required' => true,
             ],
@@ -117,14 +117,14 @@ class AttributeSeeder extends Seeder
             [
                 'name' => 'Fuel Type',
                 'type' => 'select',
-                'options' => ['Petrol', 'Diesel', 'Gas', 'Electric', 'Hybrid'],
+                'options' => json_encode(['Petrol', 'Diesel', 'Gas', 'Electric', 'Hybrid']),
                 'category_id' => 4,
                 'is_required' => true,
             ],
             [
                 'name' => 'Transmission',
                 'type' => 'select',
-                'options' => ['Manual', 'Automatic'],
+                'options' => json_encode(['Manual', 'Automatic']),
                 'category_id' => 4,
                 'is_required' => true,
             ],
