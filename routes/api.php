@@ -3,7 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\AttributeController; // Added AttributeController
+use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\HomeController; // Added AttributeController
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// Home page route
+Route::get('home', [HomeController::class, 'index']);
 
 // Auth routes
 Route::controller(AuthController::class)->group(function () {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+
     protected $fillable = [
         'title',
         'description',
@@ -13,7 +14,8 @@ class Product extends Model
         'category_id',
         'user_id',
         'condition',
-        'location'
+        'location',
+        'views'
     ];
 
     protected $casts = [
@@ -45,6 +47,11 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class)->orderBy('order');
+    }
+
+    public function incrementViews()
+    {
+        $this->increment('views');
     }
 
     public function primaryImage()

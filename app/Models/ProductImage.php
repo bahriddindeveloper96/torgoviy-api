@@ -13,6 +13,8 @@ class ProductImage extends Model
         'order'
     ];
 
+    protected $appends = ['url'];
+
     protected $casts = [
         'is_primary' => 'boolean'
     ];
@@ -20,5 +22,13 @@ class ProductImage extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function getUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return null;
     }
 }

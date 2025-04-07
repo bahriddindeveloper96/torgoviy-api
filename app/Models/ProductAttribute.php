@@ -12,6 +12,8 @@ class ProductAttribute extends Model
         'value',
     ];
 
+    protected $with = ['attribute.translations'];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
