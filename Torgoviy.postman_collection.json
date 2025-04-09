@@ -349,81 +349,16 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "title",
-									"value": "iPhone 13",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "New iPhone 13 with warranty",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "999.99",
-									"type": "text"
-								},
-								{
-									"key": "category_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "condition",
-									"value": "new",
-									"type": "text"
-								},
-								{
-									"key": "location",
-									"value": "Tashkent",
-									"type": "text"
-								},
-								{
-									"key": "images[]",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "is_primary[]",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "order[]",
-									"value": "0",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Brand]",
-									"value": "Apple",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Model]",
-									"value": "iPhone 13",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Storage]",
-									"value": "128GB",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Color]",
-									"value": "Midnight",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Warranty]",
-									"value": "true",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"iPhone 13\",\n    \"description\": \"New iPhone 13 with warranty\",\n    \"price\": \"999.99\",\n    \"category_id\": \"1\",\n    \"condition\": \"new\",\n    \"location\": \"Tashkent\",\n    \"images\": [],\n    \"is_primary\": [\"true\"],\n    \"order\": [\"0\"],\n    \"attributes\": {\n        \"Brand\": \"Apple\",\n        \"Model\": \"iPhone 13\",\n        \"Storage\": \"128GB\",\n        \"Color\": \"Midnight\",\n        \"Warranty\": \"true\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/products",
@@ -446,86 +381,16 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "_method",
-									"value": "PUT",
-									"type": "text"
-								},
-								{
-									"key": "title",
-									"value": "iPhone 13 Pro",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Updated iPhone 13 Pro",
-									"type": "text"
-								},
-								{
-									"key": "price",
-									"value": "1299.99",
-									"type": "text"
-								},
-								{
-									"key": "category_id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "condition",
-									"value": "new",
-									"type": "text"
-								},
-								{
-									"key": "location",
-									"value": "Tashkent",
-									"type": "text"
-								},
-								{
-									"key": "images[]",
-									"type": "file",
-									"src": []
-								},
-								{
-									"key": "is_primary[]",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "order[]",
-									"value": "0",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Brand]",
-									"value": "Apple",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Model]",
-									"value": "iPhone 13 Pro",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Storage]",
-									"value": "256GB",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Color]",
-									"value": "Sierra Blue",
-									"type": "text"
-								},
-								{
-									"key": "attributes[Warranty]",
-									"value": "true",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n    \"_method\": \"PUT\",\n    \"title\": \"iPhone 13 Pro\",\n    \"description\": \"Updated iPhone 13 Pro\",\n    \"price\": \"1299.99\",\n    \"category_id\": \"1\",\n    \"condition\": \"new\",\n    \"location\": \"Tashkent\",\n    \"images\": [],\n    \"is_primary\": [\"true\"],\n    \"order\": [\"0\"],\n    \"attributes\": {\n        \"Brand\": \"Apple\",\n        \"Model\": \"iPhone 13 Pro\",\n        \"Storage\": \"256GB\",\n        \"Color\": \"Sierra Blue\",\n        \"Warranty\": \"true\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/products/1",
