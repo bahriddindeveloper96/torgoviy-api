@@ -138,7 +138,13 @@
 					"name": "Get All Categories",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "uz",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{base_url}}/api/categories",
 							"host": ["{{base_url}}"],
@@ -172,31 +178,26 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "Electronics",
-									"type": "text"
-								},
-								{
-									"key": "description",
-									"value": "Electronic devices and accessories",
-									"type": "text"
-								},
-								{
-									"key": "parent_id",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
+							"mode": "raw",
+							"raw": "{\n    \"translations\": [\n        {\n            \"locale\": \"uz\",\n            \"name\": \"Elektronika\",\n            \"description\": \"Elektronika mahsulotlari\"\n        },\n        {\n            \"locale\": \"ru\",\n            \"name\": \"Электроника\",\n            \"description\": \"Электронные товары\"\n        },\n        {\n            \"locale\": \"en\",\n            \"name\": \"Electronics\",\n            \"description\": \"Electronic products\"\n        }\n    ],\n    \"parent_id\": null,\n    \"attributes\": [\n        {\n            \"translations\": [\n                {\n                    \"locale\": \"uz\",\n                    \"name\": \"Brend\"\n                },\n                {\n                    \"locale\": \"ru\",\n                    \"name\": \"Бренд\"\n                },\n                {\n                    \"locale\": \"en\",\n                    \"name\": \"Brand\"\n                }\n            ],\n            \"type\": \"select\",\n            \"is_required\": true,\n            \"is_filterable\": true,\n            \"validation_rules\": [\"required\"]\n        },\n        {\n            \"translations\": [\n                {\n                    \"locale\": \"uz\",\n                    \"name\": \"Model\"\n                },\n                {\n                    \"locale\": \"ru\",\n                    \"name\": \"Модель\"\n                },\n                {\n                    \"locale\": \"en\",\n                    \"name\": \"Model\"\n                }\n            ],\n            \"type\": \"text\",\n            \"is_required\": true,\n            \"is_filterable\": false,\n            \"validation_rules\": [\"required\", \"max:100\"]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{base_url}}/api/categories",

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -88,34 +89,63 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'translations' => 'required|array',
-            'translations.*' => 'required|array',
-            'translations.*.locale' => 'required|string|size:2',
+            'translations.*.locale' => 'required|string|in:uz,ru,en',
             'translations.*.name' => 'required|string|max:255',
-            'translations.*.description' => 'nullable|string',
+            'translations.*.description' => 'required|string',
             'parent_id' => 'nullable|exists:categories,id',
-            'image' => 'nullable|image|max:2048'
+            'attributes' => 'array',
+            'attributes.*.translations' => 'required|array',
+            'attributes.*.translations.*.locale' => 'required|string|in:uz,ru,en',
+            'attributes.*.translations.*.name' => 'required|string|max:255',
+            'attributes.*.type' => 'required|string|in:text,select,number',
+            'attributes.*.is_required' => 'required|boolean',
+            'attributes.*.is_filterable' => 'required|boolean',
+            'attributes.*.validation_rules' => 'nullable|array'
         ]);
 
+        // Get name from default locale (uz)
+        $defaultName = collect($request->translations)
+            ->where('locale', 'uz')
+            ->first()['name'];
+
+        // Generate slug from default name
+        $slug = \Str::slug($defaultName);
+
+        // Check if slug exists and make it unique if needed
+        $count = 1;
+        $originalSlug = $slug;
+        while (Category::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        // Create category with translations and slug
         $category = new Category();
-        $category->parent_id = $validated['parent_id'] ?? null;
-
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('categories', 'public');
-            $category->image = $path;
-        }
-
+        $category->slug = $slug;
+        $category->parent_id = $request->parent_id;
+        $category->setTranslations('name', collect($request->translations)->pluck('name', 'locale')->toArray());
+        $category->setTranslations('description', collect($request->translations)->pluck('description', 'locale')->toArray());
         $category->save();
 
-        // Save translations
-        foreach ($validated['translations'] as $translation) {
-            $category->translateOrNew($translation['locale'])->fill([
-                'name' => $translation['name'],
-                'description' => $translation['description'] ?? null,
-            ]);
+        // Create attributes if provided
+        if ($request->has('attributes')) {
+            foreach ($request->attributes as $attributeData) {
+                $attribute = new Attribute();
+                $attribute->type = $attributeData['type'];
+                $attribute->is_required = $attributeData['is_required'];
+                $attribute->is_filterable = $attributeData['is_filterable'];
+                $attribute->validation_rules = $attributeData['validation_rules'] ?? [];
+                $attribute->setTranslations('name', collect($attributeData['translations'])->pluck('name', 'locale')->toArray());
+                $attribute->category()->associate($category);
+                $attribute->save();
+            }
         }
-        $category->save();
 
-        return response()->json($category->load('translations'), 201);
+        // Load category with attributes and their translations
+        $category->load(['attributes' => function ($query) {
+            $query->with('translations');
+        }]);
+
+        return response()->json($category, 201);
     }
 
     public function update(Request $request, Category $category)
