@@ -17,17 +17,14 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Remove images column from products table
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('images');
-        });
+
     }
 
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->json('images')->nullable();
-        });
+        // Schema::table('products', function (Blueprint $table) {
+        //     $table->json('images')->nullable();
+        // });
 
         Schema::dropIfExists('product_images');
     }

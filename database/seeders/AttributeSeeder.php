@@ -12,33 +12,48 @@ class AttributeSeeder extends Seeder
         $attributes = [
             // Elektronika uchun attributelar
             [
-                'name' => 'Brand',
+                'name' => [
+                    'en' => 'Brand',
+                    'en' => 'Brand ru',
+                ],
                 'type' => 'select',
                 'options' => json_encode(['Apple', 'Samsung', 'Xiaomi', 'Huawei', 'LG', 'Sony']),
                 'category_id' => 1,
                 'is_required' => true,
             ],
             [
-                'name' => 'Model',
+                'name' => [
+                    'en' => 'Model',
+                    'ru' => 'Model ru',
+                ],
                 'type' => 'text',
                 'category_id' => 1,
                 'is_required' => true,
             ],
             [
-                'name' => 'Storage',
+                'name' => [
+                    'en' => 'Storage',
+                    'ru' => 'Storage ru',
+                ],
                 'type' => 'select',
                 'options' => json_encode(['32GB', '64GB', '128GB', '256GB', '512GB', '1TB']),
                 'category_id' => 1,
                 'is_required' => true,
             ],
             [
-                'name' => 'Color',
+                'name' => [
+                    'en' => 'Color',
+                    'ru' => 'Color ru',
+                ],
                 'type' => 'text',
                 'category_id' => 1,
                 'is_required' => true,
             ],
             [
-                'name' => 'Warranty',
+                'name' => [
+                    'en' => 'Warranty',
+                    'ru' => 'Warranty ru',
+                ],
                 'type' => 'boolean',
                 'category_id' => 1,
                 'is_required' => false,

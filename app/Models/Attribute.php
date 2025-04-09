@@ -3,28 +3,42 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
+use Spatie\Translatable\HasTranslations;
 
-class Attribute extends Model implements TranslatableContract
+class Attribute extends Model
 {
-    use Translatable;
+    use HasTranslations;
 
-    public $translatedAttributes = ['name'];
-    
+    public $translatable = ['name']; // translatable attributes
     protected $fillable = [
         'type',
+        'name',
         'category_id',
         'is_required',
         'is_filterable',
         'validation_rules'
     ];
 
+    protected $hidden = ['translations'];
+
+    protected $appends = ['translated_name'];
+
     protected $casts = [
         'is_required' => 'boolean',
         'is_filterable' => 'boolean',
         'validation_rules' => 'array'
     ];
+
+    public function getTranslatedNameAttribute()
+    {
+        return $this->getTranslated('name');
+    }
+
+    protected function getTranslated($attribute)
+    {
+        $locale = app()->getLocale();
+        return $this->getTranslation($attribute, $locale, false) ?? $this->getTranslation($attribute, config('app.fallback_locale'));
+    }
 
     public function category()
     {

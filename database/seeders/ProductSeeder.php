@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $users = User::where('role', 'user')->get();
-        
+
         $products = [
             // Elektronika
             [
@@ -25,8 +25,8 @@ class ProductSeeder extends Seeder
                 'condition' => 'new',
                 'location' => 'Tashkent',
                 'images' => [
-                    ['image' => 'iphone13_1.jpg', 'is_primary' => true, 'order' => 0],
-                    ['image' => 'iphone13_2.jpg', 'is_primary' => false, 'order' => 1],
+                    ['image' => '1.webp', 'is_primary' => true, 'order' => 0],
+                    ['image' => '2.webp', 'is_primary' => false, 'order' => 1],
                 ],
                 'attributes' => [
                     'Brand' => 'Apple',
@@ -44,7 +44,7 @@ class ProductSeeder extends Seeder
                 'condition' => 'used',
                 'location' => 'Samarqand',
                 'images' => [
-                    ['image' => 'galaxy_s21.jpg', 'is_primary' => true, 'order' => 0],
+                    ['image' => '1.webp', 'is_primary' => true, 'order' => 0],
                 ],
                 'attributes' => [
                     'Brand' => 'Samsung',
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                     'Warranty' => 'false',
                 ],
             ],
-            
+
             // Kiyim-kechak
             [
                 'title' => 'Klassik kostyum',
@@ -64,8 +64,8 @@ class ProductSeeder extends Seeder
                 'condition' => 'new',
                 'location' => 'Tashkent',
                 'images' => [
-                    ['image' => 'suit_1.jpg', 'is_primary' => true, 'order' => 0],
-                    ['image' => 'suit_2.jpg', 'is_primary' => false, 'order' => 1],
+                    ['image' => '2.webp', 'is_primary' => true, 'order' => 0],
+                    ['image' => '3.webp', 'is_primary' => false, 'order' => 1],
                 ],
                 'attributes' => [
                     'Size' => 'L',
@@ -74,7 +74,7 @@ class ProductSeeder extends Seeder
                     'Gender' => 'Male',
                 ],
             ],
-            
+
             // Uy-ro'zg'or
             [
                 'title' => 'Muzlatgich',
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
                 'condition' => 'new',
                 'location' => 'Buxoro',
                 'images' => [
-                    ['image' => 'fridge_1.jpg', 'is_primary' => true, 'order' => 0],
+                    ['image' => '1.webp', 'is_primary' => true, 'order' => 0],
                 ],
                 'attributes' => [
                     'Brand' => 'LG',
@@ -92,7 +92,7 @@ class ProductSeeder extends Seeder
                     'Energy Class' => 'A++',
                 ],
             ],
-            
+
             // Transport
             [
                 'title' => 'Chevrolet Malibu',
@@ -102,9 +102,9 @@ class ProductSeeder extends Seeder
                 'condition' => 'used',
                 'location' => 'Tashkent',
                 'images' => [
-                    ['image' => 'malibu_1.jpg', 'is_primary' => true, 'order' => 0],
-                    ['image' => 'malibu_2.jpg', 'is_primary' => false, 'order' => 1],
-                    ['image' => 'malibu_3.jpg', 'is_primary' => false, 'order' => 2],
+                    ['image' => '3.webp', 'is_primary' => true, 'order' => 0],
+                    ['image' => '1.webp', 'is_primary' => false, 'order' => 1],
+                    ['image' => '2.webp', 'is_primary' => false, 'order' => 2],
                 ],
                 'attributes' => [
                     'Brand' => 'Chevrolet',
@@ -114,7 +114,7 @@ class ProductSeeder extends Seeder
                     'Transmission' => 'Automatic',
                 ],
             ],
-            
+
             // Ko'chmas mulk
             [
                 'title' => '3 xonali kvartira',
@@ -124,8 +124,8 @@ class ProductSeeder extends Seeder
                 'condition' => 'used',
                 'location' => 'Tashkent',
                 'images' => [
-                    ['image' => 'apartment_1.jpg', 'is_primary' => true, 'order' => 0],
-                    ['image' => 'apartment_2.jpg', 'is_primary' => false, 'order' => 1],
+                    ['image' => '1.webp', 'is_primary' => true, 'order' => 0],
+                    ['image' => '1.webp', 'is_primary' => false, 'order' => 1],
                 ],
                 'attributes' => [
                     'Rooms' => '3',
@@ -141,21 +141,21 @@ class ProductSeeder extends Seeder
             $attributes = $productData['attributes'];
             $images = $productData['images'];
             unset($productData['attributes'], $productData['images']);
-            
+
             // Mahsulotni yaratish
             $user = $users->random();
             $productData['user_id'] = $user->id;
             $product = Product::create($productData);
-            
+
             // Attributelarni qo'shish
             foreach ($attributes as $name => $value) {
                 // $attribute = Attribute::where('name', $name)
                 //     ->where('category_id', $product->category_id)
                 //     ->first();
-                $attribute = Attribute::whereTranslation('name', $name)
+                $attribute = Attribute::whereJsonContains('name->en', $name)
                       ->where('category_id', $product->category_id)
                       ->first();
-                
+
                 if ($attribute) {
                     ProductAttribute::create([
                         'product_id' => $product->id,

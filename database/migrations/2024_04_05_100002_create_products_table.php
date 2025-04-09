@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('status', ['active', 'sold', 'inactive'])->default('active');
             $table->enum('condition', ['new', 'used'])->default('new');
             $table->string('location');
-            $table->json('images');
             $table->timestamps();
         });
     }

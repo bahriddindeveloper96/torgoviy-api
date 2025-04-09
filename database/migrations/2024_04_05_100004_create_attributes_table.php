@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->json('name');
             $table->enum('type', ['text', 'number', 'select', 'boolean']);
             $table->json('options')->nullable(); // For select type
             $table->foreignId('category_id')->constrained()->onDelete('cascade');

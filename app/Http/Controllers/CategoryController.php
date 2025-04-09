@@ -15,17 +15,73 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::with(['children', 'attributes', 'translations'])
-            ->whereNull('parent_id')
-            ->get();
+        $categories = Category::whereNull('parent_id')
+            ->with(['children', 'attributes'])
+            ->get()
+            ->map(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->translated_name,
+                    'description' => $category->translated_description,
+                    'slug' => $category->slug,
+                    'image' => $category->image,
+                    'children' => $category->children->map(function ($child) {
+                        return [
+                            'id' => $child->id,
+                            'name' => $child->translated_name,
+                            'description' => $child->translated_description,
+                            'slug' => $child->slug,
+                            'image' => $child->image,
+                        ];
+                    }),
+                    'attributes' => $category->attributes->map(function ($attribute) {
+                        return [
+                            'id' => $attribute->id,
+                            'name' => $attribute->translated_name,
+                            'type' => $attribute->type,
+                            'is_required' => $attribute->is_required,
+                            'is_filterable' => $attribute->is_filterable,
+                            'validation_rules' => $attribute->validation_rules
+                        ];
+                    })
+                ];
+            });
 
         return response()->json($categories);
     }
 
     public function show(Category $category)
     {
-        $category->load(['children', 'attributes', 'translations']);
-        return response()->json($category);
+        $category->load(['children', 'attributes']);
+        
+        $data = [
+            'id' => $category->id,
+            'name' => $category->translated_name,
+            'description' => $category->translated_description,
+            'slug' => $category->slug,
+            'image' => $category->image,
+            'children' => $category->children->map(function ($child) {
+                return [
+                    'id' => $child->id,
+                    'name' => $child->translated_name,
+                    'description' => $child->translated_description,
+                    'slug' => $child->slug,
+                    'image' => $child->image,
+                ];
+            }),
+            'attributes' => $category->attributes->map(function ($attribute) {
+                return [
+                    'id' => $attribute->id,
+                    'name' => $attribute->translated_name,
+                    'type' => $attribute->type,
+                    'is_required' => $attribute->is_required,
+                    'is_filterable' => $attribute->is_filterable,
+                    'validation_rules' => $attribute->validation_rules
+                ];
+            })
+        ];
+
+        return response()->json($data);
     }
 
     public function store(Request $request)
@@ -105,19 +161,19 @@ class CategoryController extends Controller
             ->with(['attributes', 'images'])
             ->paginate(20);
 
-        // Get breadcrumbs data with translations
+        // Get breadcrumbs data
         $breadcrumbs = [];
-        $currentCategory = $category->load('translations');
+        $currentCategory = $category;
         
         while ($currentCategory) {
             array_unshift($breadcrumbs, [
                 'id' => $currentCategory->id,
-                'name' => $currentCategory->name,
-                'description' => $currentCategory->description,
+                'name' => $currentCategory->translated_name,
+                'description' => $currentCategory->translated_description,
                 'slug' => $currentCategory->slug,
-                'translations' => $currentCategory->translations->keyBy('locale')
+                'image' => $currentCategory->image
             ]);
-            $currentCategory = $currentCategory->parent?->load('translations');
+            $currentCategory = $currentCategory->parent;
         }
 
         return response()->json([

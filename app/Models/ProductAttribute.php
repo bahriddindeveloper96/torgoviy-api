@@ -12,7 +12,7 @@ class ProductAttribute extends Model
         'value',
     ];
 
-    protected $with = ['attribute.translations'];
+    protected $with = ['attribute'];
 
     public function product()
     {
