@@ -12,7 +12,7 @@ class ProductAttributeResource extends JsonResource
             'id' => $this->id,
             'product_id' => $this->product_id,
             'attribute_id' => $this->attribute_id,
-            'attribute_name' => $this->attribute->translate()->name,
+            'attribute_name' => $this->attribute->getTranslation('name', app()->getLocale()),
             'value' => $this->value,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

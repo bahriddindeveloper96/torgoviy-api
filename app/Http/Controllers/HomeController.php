@@ -12,9 +12,8 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            // Get main categories with translations
-            $categories = Category::with('translations')
-                ->whereNull('parent_id')
+            // Get main categories
+            $categories = Category::whereNull('parent_id')
                 ->take(8)
                 ->get();
 

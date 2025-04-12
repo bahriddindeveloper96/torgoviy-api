@@ -62,25 +62,28 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'condition' => 'required|in:new,used',
             'location' => 'required|string|max:255',
-            'images.*' => 'required|image|max:2048'
+            'images' => 'required|array',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $data = $request->all();
+        $data = $request->except('images');
         $data['user_id'] = Auth::id();
         $data['images'] = [];
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
-                $data['images'][] = $path;
+                $fileName = time() . '_' . $image->getClientOriginalName();
+                $filePath = $image->storeAs('products', $fileName, 'public');
+                $data['images'][] = '/storage/' . $filePath;
             }
         }
 
         $product = Product::create($data);
+        $product->load(['category', 'user']);
 
         return response()->json($product, 201);
     }
@@ -98,7 +101,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'condition' => 'required|in:new,used',
             'location' => 'required|string|max:255',
-            'images.*' => 'nullable|image|max:2048'
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         if ($validator->fails()) {
@@ -110,8 +113,9 @@ class ProductController extends Controller
         if ($request->hasFile('images')) {
             $data['images'] = [];
             foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
-                $data['images'][] = $path;
+                $fileName = time() . '_' . $image->getClientOriginalName();
+                $filePath = $image->storeAs('products', $fileName, 'public');
+                $data['images'][] = '/storage/' . $filePath;
             }
         }
 
